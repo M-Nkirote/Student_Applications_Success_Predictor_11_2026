@@ -1,0 +1,53 @@
+{
+  "model_file": "enrolment_model.joblib",
+  "target": "enrolled (Student Enrolled / Enrolled, but Dropped Out / Enrolled, but no Commission)",
+  "numeric_features": [
+    "intake_lead_months"
+  ],
+  "categorical_features": [
+    "Lead Source Main Category",
+    "Deal Owner",
+    "Student Country Location",
+    "level_of_study",
+    "destination",
+    "Study Type"
+  ],
+  "include_snapshot_features": false,
+  "stale_months_rule": 12,
+  "decision_threshold": 0.2451366688611292,
+  "priority_band_cutoffs": {
+    "high": 0.2730547376170571,
+    "medium": 0.1120518081235985
+  },
+  "chosen_params": {
+    "model__min_samples_leaf": 10,
+    "model__max_leaf_nodes": 4,
+    "model__max_iter": 150,
+    "model__max_depth": 5,
+    "model__learning_rate": 0.02,
+    "model__l2_regularization": 0.1
+  },
+  "training_window": {
+    "intake_buffer_months": 1,
+    "mature_months_no_intake": 12
+  },
+  "final_algorithm": "Logistic regression",
+  "removed_for_multiple_enrolments": 230,
+  "test_metrics": {
+    "ROC-AUC": 0.8085452083646758,
+    "PR-AUC": 0.49416058861228307,
+    "PR-AUC of random guessing (base rate)": 0.16594516594516595,
+    "Brier score": 0.11140374725064683,
+    "Log loss": 0.3493509412210311,
+    "F1 at chosen threshold": 0.4326241134751773
+  },
+  "training_rows": 3462,
+  "data_snapshot_date": "2025-08-05 09:58:00",
+  "random_state": 42,
+  "library_versions": {
+    "python": "3.14.5",
+    "pandas": "3.1.1",
+    "scikit-learn": "1.9.1",
+    "numpy": "2.5.4"
+  }
+}

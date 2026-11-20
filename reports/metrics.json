@@ -1,41 +1,41 @@
 {
   "model_comparison_oof": {
     "gradient_boosting": {
-      "roc_auc": 0.817147843772674,
-      "pr_auc": 0.5146114250084554,
-      "brier": 0.10869040113486757
+      "roc_auc": 0.822643206502329,
+      "pr_auc": 0.510711400520391,
+      "brier": 0.10915275884559589
     },
     "logistic_regression": {
-      "roc_auc": 0.8162225513821584,
-      "pr_auc": 0.506097118108433,
-      "brier": 0.1095396400365698
+      "roc_auc": 0.8195332090211543,
+      "pr_auc": 0.48677731607202074,
+      "brier": 0.11050951852313452
     }
   },
   "test_metrics": {
-    "roc_auc": 0.8579434331277269,
-    "pr_auc": 0.5917491245749621,
+    "roc_auc": 0.8366706785015797,
+    "pr_auc": 0.5244650383116575,
     "base_rate": 0.16594516594516595,
-    "brier": 0.0986179316765016,
+    "brier": 0.10592551616693549,
     "brier_base_rate": 0.13840736784459728,
-    "brier_skill": 0.2874806217886533,
-    "log_loss": 0.31101693893670995,
-    "f1_at_threshold": 0.5298013245033113
+    "brier_skill": 0.23468296654649312,
+    "log_loss": 0.33322280062544585,
+    "f1_at_threshold": 0.4864864864864865
   },
   "priority_bands_test": [
     {
       "band": "High",
-      "applications": 123,
-      "enrolment_rate": 0.5203
+      "applications": 122,
+      "enrolment_rate": 0.4918
     },
     {
       "band": "Medium",
-      "applications": 209,
-      "enrolment_rate": 0.1866
+      "applications": 230,
+      "enrolment_rate": 0.187
     },
     {
       "band": "Low",
-      "applications": 361,
-      "enrolment_rate": 0.0332
+      "applications": 341,
+      "enrolment_rate": 0.0352
     }
   ]
 }
