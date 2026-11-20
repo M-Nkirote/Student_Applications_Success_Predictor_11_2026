@@ -22,7 +22,6 @@ def load_modelling_data() -> pd.DataFrame:
 
 
 def grouped_split(X, y, groups, cv):
-    # Hold out one grouped fold (~20%) as the test set. A student shouldn't appear in both sets.
     train_idx, test_idx = next(cv.split(X, y, groups))
     assert not set(groups.iloc[train_idx]) & set(groups.iloc[test_idx])
     return train_idx, test_idx
@@ -48,7 +47,6 @@ def tune_gradient_boosting(X_train, y_train, groups_train, cv):
 
 
 def choose_final_model(tuned_gb, X_train, y_train, groups_train, cv):
-    # Compare tuned gradient boosting with logistic regression on out-of-fold predictions.
     logistic = model.make_logistic_regression()
     oof_gb = cross_val_predict(tuned_gb, X_train, y_train, groups=groups_train, cv=cv, method="predict_proba", n_jobs=-1)[:, 1]
     oof_lr = cross_val_predict(logistic, X_train, y_train, groups=groups_train, cv=cv, method="predict_proba", n_jobs=-1)[:, 1]
@@ -67,7 +65,6 @@ def choose_final_model(tuned_gb, X_train, y_train, groups_train, cv):
 
 
 def choose_threshold_and_bands(y_train, oof_proba) -> dict:
-    # F1-optimal threshold and priority-band cut-offs, learned from out-of-fold TRAINING predictions.
     precisions, recalls, thresholds = precision_recall_curve(y_train, oof_proba)
     f1 = 2 * precisions[:-1] * recalls[:-1] / (precisions[:-1] + recalls[:-1] + 1e-12)
     return {
@@ -87,6 +84,7 @@ def form_options(model_df: pd.DataFrame) -> dict:
         "countries": sorted_values("Student Country Location"),
         "levels": ["Undergraduate", "Postgraduate", "Diploma/Certificate", "Other/Undecided"],
         "destinations": sorted_values("destination"),
+        "study_types": sorted_values("Study Type"),
     }
 
 
@@ -97,32 +95,32 @@ def main() -> None:
     groups = model_df["Student ID"]
     cv = StratifiedGroupKFold(n_splits=config.N_SPLITS, shuffle=True, random_state=config.RANDOM_STATE)
 
-    # Grouped train/test split
+    # 1. Grouped train/test split
     train_idx, test_idx = grouped_split(X, y, groups, cv)
     X_train, X_test = X.iloc[train_idx], X.iloc[test_idx]
     y_train, y_test = y.iloc[train_idx], y.iloc[test_idx]
     groups_train = groups.iloc[train_idx]
     print(f"Train: {len(X_train):,} rows | Test: {len(X_test):,} rows")
 
-    # Tune gradient boosting, and choose the final algorithm
+    # 2. Tune gradient boosting, 3. choose the final algorithm
     tuned_gb, chosen_params = tune_gradient_boosting(X_train, y_train, groups_train, cv)
     algorithm, selected_model, oof_proba, comparison = choose_final_model(tuned_gb, X_train, y_train, groups_train, cv)
     print(f"Selected model: {algorithm}")
 
-    # Threshold and priority bands (training data only)
+    # 4. Threshold and priority bands (training data only)
     cutoffs = choose_threshold_and_bands(y_train, oof_proba)
 
-    # Evaluate once on the untouched test set
+    # 5. Evaluate once on the untouched test set
     test_proba = selected_model.predict_proba(X_test)[:, 1]
     test_metrics = evaluate.compute_metrics(y_test, test_proba, cutoffs["threshold"])
     lift = evaluate.lift_table(y_test, test_proba)
     bands = evaluate.band_table(y_test, evaluate.assign_band(test_proba, cutoffs["high_cutoff"], cutoffs["medium_cutoff"]))
     print("Test metrics:", {k: round(v, 4) for k, v in test_metrics.items()})
 
-    # Refit on all labelled data for deployment
+    # 6. Refit on ALL labelled data for deployment
     final_model = clone(selected_model).fit(X, y)
 
-    # Save the artifacts
+    # 7. Save artifacts
     for folder in [config.MODELS_DIR, config.REPORTS_DIR, config.OUTPUTS_DIR]:
         folder.mkdir(parents=True, exist_ok=True)
 

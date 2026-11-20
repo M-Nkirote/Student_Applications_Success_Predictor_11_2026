@@ -34,6 +34,7 @@ class ModelService:
             "Student Country Location": cleaning.clean_country(pd.Series([application["student_country"]])),
             "level_of_study": cleaning.clean_level_of_study(pd.Series([application["level_of_study"]])),
             "destination": cleaning.clean_destination(pd.Series([application["destination"] or None])),
+            "Study Type": [application.get("study_type") or "Undecided"],
         })
         return features.get_feature_matrix(features.add_features(row))
 
@@ -61,8 +62,9 @@ class ModelService:
             "student_country": record["Student Country Location"] if pd.notna(record["Student Country Location"]) else "Not known",
             "level_of_study": record["level_of_study"] if pd.notna(record["level_of_study"]) else "Not known",
             "destination": record["destination"],
-            "intake_month": record["intake_month"],
-            "intake_year": int(str(record["intake_date"])[:4]) if "intake_date" in record and pd.notna(record["intake_date"]) else None,
+            "study_type": record["Study Type"] if pd.notna(record["Study Type"]) else "Not known",
+            "intake_month": pd.Timestamp(record["intake_date"]).strftime("%b") if pd.notna(record["intake_date"]) else "Undecided",
+            "intake_year": pd.Timestamp(record["intake_date"]).year if pd.notna(record["intake_date"]) else None,
         }
         return match[config.FEATURES].reset_index(drop=True), details
 

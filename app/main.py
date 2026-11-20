@@ -24,8 +24,7 @@ app.add_middleware(SessionMiddleware, secret_key=os.getenv("SESSION_SECRET", "ch
 app.mount("/static", StaticFiles(directory=APP_DIR / "static"), name="static")
 templates = Jinja2Templates(directory=APP_DIR / "templates")
 
-service = ModelService()   
-# JSON API
+service = ModelService()  
 
 @app.get("/health")
 def health():
@@ -52,7 +51,6 @@ def api_open_application(opportunity_id: str, explain: bool = True):
     return {"opportunity_id": opportunity_id, **service.score_row(row, explain=explain)}
 
 
-# Login
 @app.get("/login", response_class=HTMLResponse)
 def login_page(request: Request):
     return templates.TemplateResponse(request, "login.html", {"error": None})
@@ -73,7 +71,6 @@ def logout(request: Request):
     return RedirectResponse("/login", status_code=303)
 
 
-# Web pages for agents
 def form_context(error=None, values=None) -> dict:
     today = date.today()
     return {
@@ -104,12 +101,12 @@ def score_application(request: Request,
                       student_country: Annotated[str, Form()], level_of_study: Annotated[str, Form()],
                       destination: Annotated[str, Form()], intake_month: Annotated[str, Form()],
                       created_date: Annotated[str, Form()], intake_year: Annotated[str, Form()] = "",
-                      opportunity_id: Annotated[str, Form()] = ""):
+                      opportunity_id: Annotated[str, Form()] = "", study_type: Annotated[str, Form()] = "Undecided"):
     if not current_agent(request):
         return RedirectResponse("/login", status_code=303)
 
     values = {"lead_source": lead_source, "deal_owner": deal_owner, "student_country": student_country,
-              "level_of_study": level_of_study, "destination": destination, "intake_month": intake_month,
+              "level_of_study": level_of_study, "destination": destination, "study_type": study_type, "intake_month": intake_month,
               "intake_year": int(intake_year) if intake_year else None, "created_date": created_date,
               "opportunity_id": opportunity_id.strip() or None}
     try:

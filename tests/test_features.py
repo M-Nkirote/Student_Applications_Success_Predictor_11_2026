@@ -1,5 +1,7 @@
+"""Feature engineering used by training and the API."""
 import numpy as np
 import pandas as pd
+
 from src import config, features
 
 
@@ -7,7 +9,7 @@ def make_row(created, intake):
     return pd.DataFrame({
         "Created At": [pd.Timestamp(created)], "intake_date": [pd.Timestamp(intake) if intake else pd.NaT],
         "Lead Source Main Category": ["Digital"], "Deal Owner": ["OWNER_X"], "Student Country Location": ["Kenya"],
-        "level_of_study": ["Undergraduate"], "destination": ["Canada"],
+        "level_of_study": ["Undergraduate"], "destination": ["Canada"], "Study Type": ["On-Campus"],
     })
 
 

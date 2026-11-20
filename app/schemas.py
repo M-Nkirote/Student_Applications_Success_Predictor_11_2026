@@ -13,6 +13,7 @@ class ApplicationInput(BaseModel):
     student_country: str = Field(examples=["Kenya"])
     level_of_study: str = Field(examples=["Postgraduate"])
     destination: str = Field(default="Undecided", examples=["United Kingdom"])
+    study_type: str = Field(default="Undecided", examples=["On-Campus"])
     intake_month: IntakeMonth = "Undecided"
     intake_year: Optional[int] = Field(default=None, ge=2020, le=2035, examples=[2026])
     created_date: date = Field(default_factory=date.today)

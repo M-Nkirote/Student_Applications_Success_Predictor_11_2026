@@ -25,9 +25,10 @@ RANDOM_STATE = 42
 KEEP_COLUMNS = [
     "Opportunity ID", "Student ID", "Most Advanced Stage", "Created At", "Enrolled Date",
     "Correct Intake", "Lead Source Main Category", "Deal Owner", "Student Country Location",
-    "What Level Of Study Are You Applying For", "Study Destination", "Inserted At",
+    "What Level Of Study Are You Applying For", "Study Destination", "Study Type", "Inserted At",
 ]
 
+# Plausible window for event dates (anything outside is a data-entry error)
 DATE_MIN = "2015-01-01"
 DATE_MAX_YEARS_AFTER_SNAPSHOT = 1
 
@@ -87,14 +88,14 @@ DESTINATION_MAPPING = {
     "Congo The Democratic Republic Of The": "DR Congo",
 }
 
-# Model features (final set selected in notebook)
 NUMERIC_FEATURES = ["intake_lead_months"]
 CATEGORICAL_FEATURES = [
     "Lead Source Main Category", "Deal Owner", "Student Country Location",
-    "level_of_study", "destination", "intake_month", "created_month",
+    "level_of_study", "destination", "Study Type",
 ]
 FEATURES = NUMERIC_FEATURES + CATEGORICAL_FEATURES
 
+# Plain-language names shown to agents in the web app
 FEATURE_LABELS = {
     "intake_lead_months": "Months until intake",
     "Lead Source Main Category": "Lead source",
@@ -102,18 +103,18 @@ FEATURE_LABELS = {
     "Student Country Location": "Student country",
     "level_of_study": "Level of study",
     "destination": "Study destination",
+    "Study Type": "Study type",
     "intake_month": "Intake month",
     "created_month": "Month application was created",
 }
 
-MIN_FREQUENCY = 20 # rarer categories are grouped into one "infrequent" bucket by the encoder
+MIN_FREQUENCY = 20   # rarer categories are grouped into one "infrequent" bucket by the encoder
 
-# Modelling settings
 N_SPLITS = 5
 TUNING_ITERATIONS = 40
-PR_AUC_TOLERANCE = 0.02 # final model choice (gradient boosting vs logistic regression)
-HIGH_BAND_QUANTILE = 0.80 # top 20% of scores = High priority
-MEDIUM_BAND_QUANTILE = 0.50 # next 30% = Medium, rest = Low
+PR_AUC_TOLERANCE = 0.02          # final model choice (gradient boosting vs logistic regression)
+HIGH_BAND_QUANTILE = 0.80        # top 20% of scores = High priority
+MEDIUM_BAND_QUANTILE = 0.50      # next 30% = Medium, rest = Low
 
 PARAM_DISTRIBUTIONS = {
     "model__learning_rate": [0.01, 0.02, 0.05, 0.1],

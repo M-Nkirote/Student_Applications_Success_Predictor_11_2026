@@ -20,13 +20,13 @@ To build a model that gives each application a **probability of success (enrolme
 
 | Metric | Value |
 |---|---|
-| ROC-AUC | 0.857 (cross-validation 0.818) |
-| PR-AUC | 0.556 vs 0.167 base rate (cross-validation 0.525) |
-| Brier score | 0.103 vs 0.139 for the base rate (26% skill) |
-| Top 10% of scores | 62.9% enrolment, 3.8× the average |
-| Top 30% of scores | 74% of all enrolments |
-| Priority bands | High 52.9%, Medium 18.4%, Low 2.1% enrolment |
-| Temporal check (train on older, test on newer) | ROC-AUC 0.745: performance drops over time, so the model needs regular retraining |
+| ROC-AUC | 0.809 (cross-validation 0.817) |
+| PR-AUC | 0.494 vs 0.166 base rate (cross-validation 0.494) |
+| Brier score | 0.111 vs 0.138 for the base rate (19.5% skill) |
+| Top 10% of scores | 51.4% enrolment, 3.1× the average |
+| Top 30% of scores | 64% of all enrolments |
+| Priority bands | High 37.0%, Medium 22.6%, Low 4.7% enrolment |
+| Temporal check (train on older, test on newer) | ROC-AUC 0.771: performance drops over time, so the model needs regular retraining |
 
 Full reasoning, EDA, hypothesis tests, leakage audit and technique justification are in `notebooks/student_enrollment_predictor.ipynb`.
 

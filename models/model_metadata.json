@@ -1,5 +1,5 @@
 {
-  "algorithm": "Tuned gradient boosting",
+  "algorithm": "Logistic regression",
   "numeric_features": [
     "intake_lead_months"
   ],
@@ -9,32 +9,31 @@
     "Student Country Location",
     "level_of_study",
     "destination",
-    "intake_month",
-    "created_month"
+    "Study Type"
   ],
   "chosen_params": {
     "model__min_samples_leaf": 10,
-    "model__max_leaf_nodes": 15,
+    "model__max_leaf_nodes": 4,
     "model__max_iter": 150,
-    "model__max_depth": null,
-    "model__learning_rate": 0.05,
-    "model__l2_regularization": 0.0
+    "model__max_depth": 5,
+    "model__learning_rate": 0.02,
+    "model__l2_regularization": 0.1
   },
-  "threshold": 0.19964686648751273,
-  "high_cutoff": 0.27449594671713906,
-  "medium_cutoff": 0.0908416749787654,
+  "threshold": 0.2451366688611292,
+  "high_cutoff": 0.2730547376170571,
+  "medium_cutoff": 0.1120518081235985,
   "training_base_rate": 0.1663778162911612,
   "training_rows": 3462,
   "data_snapshot_date": "2025-08-05 09:58:00",
   "test_metrics": {
-    "roc_auc": 0.8366706785015797,
-    "pr_auc": 0.5244650383116575,
+    "roc_auc": 0.8085452083646758,
+    "pr_auc": 0.49416058861228307,
     "base_rate": 0.16594516594516595,
-    "brier": 0.10592551616693549,
+    "brier": 0.11140374725064683,
     "brier_base_rate": 0.13840736784459728,
-    "brier_skill": 0.23468296654649312,
-    "log_loss": 0.33322280062544585,
-    "f1_at_threshold": 0.4864864864864865
+    "brier_skill": 0.19510247911274425,
+    "log_loss": 0.3493509412210311,
+    "f1_at_threshold": 0.4326241134751773
   },
   "form_options": {
     "lead_sources": [
@@ -167,6 +166,11 @@
       "United States",
       "Zambia",
       "Zimbabwe"
+    ],
+    "study_types": [
+      "On-Campus",
+      "Online",
+      "Undecided"
     ]
   },
   "library_versions": {

@@ -1,20 +1,16 @@
+"""API and web pages. Prediction tests are skipped until the model has been trained."""
 import pytest
 from fastapi.testclient import TestClient
+
 from app.auth import DEMO_EMAIL, DEMO_PASSWORD
 from app.main import app, service
 
 client = TestClient(app)
 needs_model = pytest.mark.skipif(not service.ready, reason="Model not trained yet (run python -m src.pipeline)")
 
-EXAMPLE = {
-    "lead_source": "Referral", 
-    "deal_owner": "NEW_AGENT", 
-    "student_country": "Kenya",
-    "level_of_study": "Postgraduate", 
-    "destination": "United Kingdom",
-    "intake_month": "Sep", 
-    "intake_year": 2026, 
-    "created_date": "2026-03-01"}
+EXAMPLE = {"lead_source": "Referral", "deal_owner": "NEW_AGENT", "student_country": "Kenya",
+           "level_of_study": "Postgraduate", "destination": "United Kingdom", "study_type": "On-Campus",
+           "intake_month": "Sep", "intake_year": 2026, "created_date": "2026-03-01"}
 
 
 def test_health():

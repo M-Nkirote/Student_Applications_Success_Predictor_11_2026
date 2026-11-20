@@ -4,31 +4,16 @@
 <article class="ticket band-{{ result.priority|lower }}">
   <div class="ticket-main">
     {% if application.opportunity_id %}<p class="ticket-id">Opportunity {{ application.opportunity_id }}</p>{% endif %}
-    <p class="ticket-route">{% if application.destination == "Undecided" %}{{ application.student_country }},
-      destination undecided{% else %}{{ application.student_country }} to {{ application.destination }}{% endif %}</p>
+    <p class="ticket-route">{% if application.destination == "Undecided" %}{{ application.student_country }}, destination undecided{% else %}{{ application.student_country }} to {{ application.destination }}{% endif %}</p>
     <p class="score">{{ "%.0f"|format(result.probability * 100) }}<span>%</span></p>
     <p class="score-label">chance this application ends in an enrolment</p>
     <dl class="ticket-facts">
-      <div>
-        <dt>Lead source</dt>
-        <dd>{{ application.lead_source }}</dd>
-      </div>
-      <div>
-        <dt>Level</dt>
-        <dd>{{ application.level_of_study }}</dd>
-      </div>
-      <div>
-        <dt>Intake</dt>
-        <dd>{{ application.intake_month }} {{ application.intake_year or "" }}</dd>
-      </div>
-      <div>
-        <dt>Deal owner</dt>
-        <dd>{{ application.deal_owner }}</dd>
-      </div>
-      {% if application.stage %}<div>
-        <dt>Current stage</dt>
-        <dd>{{ application.stage }}</dd>
-      </div>{% endif %}
+      <div><dt>Lead source</dt><dd>{{ application.lead_source }}</dd></div>
+      <div><dt>Level</dt><dd>{{ application.level_of_study }}</dd></div>
+      {% if application.study_type %}<div><dt>Study type</dt><dd>{{ application.study_type }}</dd></div>{% endif %}
+      <div><dt>Intake</dt><dd>{{ application.intake_month }} {{ application.intake_year or "" }}</dd></div>
+      <div><dt>Deal owner</dt><dd>{{ application.deal_owner }}</dd></div>
+      {% if application.stage %}<div><dt>Current stage</dt><dd>{{ application.stage }}</dd></div>{% endif %}
     </dl>
   </div>
   <div class="ticket-stub">
@@ -42,35 +27,30 @@
 </article>
 
 {% if application.late_stage %}
-<p class="note">This application has already reached <strong>{{ application.stage }}</strong>. The score uses only what
-  was known when it was created, so read it together with the stage: applications this far along convert much more
-  often.</p>
+<p class="note">This application has already reached <strong>{{ application.stage }}</strong>. The score uses only what was known when it was created, so read it together with the stage: applications this far along convert much more often.</p>
 {% endif %}
 
 <section class="why">
   <h2>Why this score</h2>
-  <p class="lede">Each factor moves the score up or down from the average application. Contributions are in percentage
-    points and add up to the final score.</p>
+  <p class="lede">Each factor moves the score up or down from the average application. Contributions are in percentage points and add up to the final score.</p>
 
   <p class="anchor">Average application <strong>{{ "%.1f"|format(result.average_score * 100) }}%</strong></p>
   <ol class="factors">
     {% for item in result.contributions %}
     {% set points = item.contribution * 100 %}
     {% set width = (item.contribution|abs / largest * 50)|round(1) %}
-    {% set direction = "neutral" if points|abs < 0.05 else ("up" if points> 0 else "down") %}
-      <li>
-        <span class="factor-name">{{ item.label }}<small>{{ item.value }}</small></span>
-        <span class="bar-track" aria-hidden="true">
-          <span class="bar {{ direction }}" style="width: {{ width }}%"></span>
-        </span>
-        <span class="factor-points {{ direction }}">{% if direction == "neutral" %}0.0{% else %}{{
-          "%+.1f"|format(points) }}{% endif %} pts</span>
-      </li>
-      {% endfor %}
+    {% set direction = "neutral" if points|abs < 0.05 else ("up" if points > 0 else "down") %}
+    <li>
+      <span class="factor-name">{{ item.label }}<small>{{ item.value }}</small></span>
+      <span class="bar-track" aria-hidden="true">
+        <span class="bar {{ direction }}" style="width: {{ width }}%"></span>
+      </span>
+      <span class="factor-points {{ direction }}">{% if direction == "neutral" %}0.0{% else %}{{ "%+.1f"|format(points) }}{% endif %} pts</span>
+    </li>
+    {% endfor %}
   </ol>
   <p class="anchor">This application <strong>{{ "%.1f"|format(result.probability * 100) }}%</strong></p>
-  <p class="hint">Explanations use SHAP (permutation method) on the model's own inputs. They describe how the model
-    reached the score, not what caused the student's decision.</p>
+  <p class="hint">Explanations use SHAP (permutation method) on the model's own inputs. They describe how the model reached the score, not what caused the student's decision.</p>
 </section>
 
 {% if from_pipeline %}
