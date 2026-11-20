@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Sign in{% endblock %}
+{% block body_class %}auth-body{% endblock %}
+{% block header %}{% endblock %}
+
+{% block main %}
+<main class="auth-card">
+
+  <section class="auth-art" aria-label="Welcome">
+    <img src="{{ url_for('static', path='login-illustration.avif') }}" alt="" onerror="this.style.visibility='hidden'">
+    <div class="art-caption">
+      <h2>See which applications will enrol</h2>
+      <p>Understand the score behind every application, and focus on the ones that matter most.</p>
+    </div>
+  </section>
+
+  <section class="auth-panel">
+    <p class="auth-logo">Higher Studies Inc. Application Success Indicator</p>
+    <h1>Welcome back</h1>
+
+    {% if error %}<p class="alert" role="alert">{{ error }}</p>{% endif %}
+
+    <form method="post" action="/login" class="auth-form">
+      <label class="field">Agent email
+        <input type="email" name="email" autocomplete="username" required autofocus>
+      </label>
+      <label class="field">Password
+        <input type="password" name="password" autocomplete="current-password" required>
+      </label>
+      <button type="submit" class="pill-btn">Sign in</button>
+    </form>
+
+    <p class="hint">Demo email : amalia@higherstudies.com, Demo password : Dem0123!</p>
+  </section>
+
+</main>
+{% endblock %}

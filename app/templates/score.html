@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Score an application | Enrolment outlook{% endblock %}
+{% block content %}
+<h1>Score an application</h1>
+<p class="lede">Enter what you know when the application is created. The score uses only this information. To see an
+  application that is already in the CRM, find it in the <a href="/pipeline">open pipeline</a>.</p>
+{% if error %}<p class="alert" role="alert">{{ error }}</p>{% endif %}
+
+<form method="post" action="/score" class="grid-form">
+  <label>Opportunity ID
+    <input name="opportunity_id" value="{{ values.opportunity_id or '' }}" inputmode="numeric"
+      aria-describedby="opp-hint">
+  </label>
+
+  <label>Lead source
+    <select name="lead_source" required>
+      {% for option in options.lead_sources %}<option {% if values.lead_source==option %}selected{% endif %}>{{ option
+        }}</option>{% endfor %}
+    </select>
+  </label>
+
+  <label>Deal owner
+    <select name="deal_owner" required>
+      {% for option in options.deal_owners %}<option {% if values.deal_owner==option %}selected{% endif %}>{{ option }}
+      </option>{% endfor %}
+      <option value="New agent" {% if values.deal_owner=="New agent" %}selected{% endif %}>New agent (not in training
+        data)</option>
+    </select>
+  </label>
+
+  <label>Student country
+    <input name="student_country" list="countries" value="{{ values.student_country or 'Kenya' }}" required>
+    <datalist id="countries">{% for option in options.countries %}<option value="{{ option }}">{% endfor %}</datalist>
+  </label>
+
+  <label>Level of study
+    <select name="level_of_study" required>
+      {% for option in options.levels %}<option {% if values.level_of_study==option %}selected{% endif %}>{{ option }}
+      </option>{% endfor %}
+    </select>
+  </label>
+
+  <label>Study destination
+    <input name="destination" list="destinations" value="{{ values.destination or 'Undecided' }}" required>
+    <datalist id="destinations">{% for option in options.destinations %}<option value="{{ option }}">{% endfor
+        %}</datalist>
+  </label>
+
+  <fieldset class="pair">
+    <legend>Intended intake</legend>
+    <label class="sr-only" for="intake_month">Intake month</label>
+    <select id="intake_month" name="intake_month">
+      <option value="Undecided">Undecided</option>
+      {% for month in months %}<option {% if values.intake_month==month %}selected{% endif %}>{{ month }}</option>{%
+      endfor %}
+    </select>
+    <label class="sr-only" for="intake_year">Intake year</label>
+    <select id="intake_year" name="intake_year">
+      <option value="">Year</option>
+      {% for year in years %}<option {% if values.intake_year==year %}selected{% endif %}>{{ year }}</option>{% endfor
+      %}
+    </select>
+  </fieldset>
+
+  <label>Application created on
+    <input type="date" name="created_date" value="{{ values.created_date or today }}" required>
+  </label>
+
+  <div class="actions"><button type="submit">Score application</button></div>
+</form>
+{% endblock %}

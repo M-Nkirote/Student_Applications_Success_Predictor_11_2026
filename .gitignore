@@ -1,0 +1,15 @@
+data/*
+docs/*
+!data/README.md
+  
+outputs/
+
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+.env
+.pytest_cache/
+
+notebooks/data_pseudonimiser.ipynb
+data/Raw_Deals_Data.csv

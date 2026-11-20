@@ -1,0 +1,10 @@
+data/
+outputs/
+reports/
+notebooks/
+tests/
+.git
+__pycache__/
+*.pyc
+.venv/
+.env
