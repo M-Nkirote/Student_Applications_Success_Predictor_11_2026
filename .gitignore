@@ -1,5 +1,5 @@
 data/*
-
+!data/higher_studies_inc_pseudonymised_data.csv
 !data/README.md
   
 outputs/
