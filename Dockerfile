@@ -13,6 +13,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY src/ src/
 COPY app/ app/
 COPY models/ models/
+COPY outputs/ outputs/
 
 # Run as a non-root user
 RUN useradd --create-home appuser && chown -R appuser /app
