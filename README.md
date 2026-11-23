@@ -1,5 +1,7 @@
 # Student Enrolment Predictor - Application Success Scoring for Higher Studies Inc. (A Study Abroad Agency)
 
+(Deployed on Render : https://student-applications-success-predictor.onrender.com/login)
+
 **Background**
 ---
 Over the past decade, the demand for higher education abroad has increased. Students are increasingly pursuing international qualifications for career advancement, access to high-quality academic resources and exposure to diverse cultural experiences. This trend has been supported by the expansion of transnational education partnerships and the widespread use of digital platforms to access program information.
