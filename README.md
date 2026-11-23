@@ -77,7 +77,7 @@ The cleaning and feature code (`src/cleaning.py`, `src/features.py`) is shared b
 │       ├── result.html
 │       └── score.html
 ├── data
-│   ├── Raw_Deals_Data.csv # git ignored
+│   ├── Raw_Deals_Data.csv
 │   ├── higher_studies_inc_pseudonymised_data.csv
 │   ├── interim
 │   │   ├── clean.pkl
@@ -86,7 +86,10 @@ The cleaning and feature code (`src/cleaning.py`, `src/features.py`) is shared b
 │       └── applications.pkl
 ├── docker-compose.yml
 ├── docs
-│   └── Enrolment Outlook Predicting Application Success for a Study-Abroad Agency.docx
+│   ├── DSA 8401 Applied Machine Learning.docx
+│   ├── DSA 8401 Applied Machine Learning.pdf
+│   ├── Enrolment Outlook Predicting Application Success for a Study-Abroad Agency.docx
+│   └── Enrolment Outlook Predicting Application Success.pptx
 ├── models
 │   ├── README.md
 │   ├── enrolment_model.joblib
@@ -94,8 +97,13 @@ The cleaning and feature code (`src/cleaning.py`, `src/features.py`) is shared b
 │   └── shap_background.pkl
 ├── notebooks
 │   ├── artifacts
+│   │   ├── models
+│   │   │   ├── enrolment_model.joblib
+│   │   │   └── model_metadata.json
 │   │   └── outputs
-│   ├── data_pseudonimiser.ipynb # git ignored
+│   │       ├── open_applications_scored.csv
+│   │       └── train_test_split.csv
+│   ├── data_pseudonimiser.ipynb
 │   └── student_enrollment_predictor_v3.ipynb
 ├── outputs
 │   ├── open_applications_scored.csv
@@ -123,7 +131,6 @@ The cleaning and feature code (`src/cleaning.py`, `src/features.py`) is shared b
     ├── test_api.py
     ├── test_cleaning.py
     └── test_features.py
-
 ```
 
 ## How to reproduce
